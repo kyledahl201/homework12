@@ -333,3 +333,57 @@ async function removeEmployee() {
 
 
 
+
+  async function updateEmployeeRole() {
+
+
+
+    const employees = await db.findAllEmployees();
+
+
+  
+    const employeeChoices = employees.map(({ id, first_name, last_name }) => ({
+      name: `${first_name} ${last_name}`,
+      value: id
+    }));
+  
+    const { employeeId } = await prompt([
+      {
+        type: "list",
+        name: "employeeId",
+        message: "Choose Employee to update",
+        choices: employeeChoices
+      }
+    ]);
+  
+    const roles = await db.findAllRoles();
+  
+    const roleChoices = roles.map(({ id, title }) => ({
+      name: title,
+      value: id
+    }));
+  
+    const { roleId } = await prompt([
+      {
+        type: "list",
+        name: "roleId",
+        message: "Chgoose role to be assigned",
+        choices: roleChoices
+      }
+    ]);
+  
+    await db.updateEmployeeRole(employeeId, roleId);
+  
+    console.log("roll has been updated");
+
+
+
+  
+    loadMainPrompts();
+  }
+
+
+  
+
+
+

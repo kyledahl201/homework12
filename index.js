@@ -671,12 +671,17 @@ async function addDepartment() {
 
 
 
-    
+
     loadMainPrompts();
   }
 
 
 
+
+function quit() {
+  console.log("quitting application");
+  process.exit();
+}
 
 
 

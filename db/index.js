@@ -80,6 +80,36 @@ findAllRoles(){
 }
 
 
+//this will create a roll
+
+createRole(role) {
+    return this.connection.query("INSERT INTO role SET ?", role);
+
+}
+
+//this will remove a roll
+
+removeRoll(roleID) {
+    return this.connection.query("DELETE FROM role WHERE id = ?", roleId);
+
+}
+
+
+
+//this wull sum up the budget
+
+findAllDepartments() {
+
+return this.connection.query(
+    "SELECT department.id, department.name, SUM(role.salary) AS utilized_budget FROM employee LEFT JOIN role on employee.role_id = role.id LEFT JOIN department on role.department_id = department.id GROUP BY department.id, department.name;"
+
+);
+
+
+}
+
+
+
 
 
 }

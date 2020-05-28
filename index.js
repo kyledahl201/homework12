@@ -428,7 +428,23 @@ async function removeEmployee() {
     loadMainPrompts();
   }
 
+
+
+  async function viewRoles() {
+
+    const roles = await db.findAllRoles();
+
   
+    console.log("\n");
+    console.table(roles);
+
+
+    
+  
+    loadMainPrompts();
+  }
+
+
 
 
 

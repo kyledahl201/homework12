@@ -108,6 +108,21 @@ return this.connection.query(
 
 }
 
+//this creates a department 
+
+createDepartment(department) {
+    return this.connection.query("INSERT INTO department SET ?", department);
+
+}
+
+//this will remove a department 
+
+removeDepartment(departmentId) {
+    return this.connection.query(
+        "DELETE FROM department WHERE id = ?",
+        departmentId
+    );
+}
 
 
 

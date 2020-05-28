@@ -599,12 +599,81 @@ async function addDepartment() {
 
 
 
-    
+
   
     loadMainPrompts();
   }
 
 
+
+
+
+  async function addEmployee() {
+    const roles = await db.findAllRoles();
+    const employees = await db.findAllEmployees();
+  
+    const employee = await prompt([
+      {
+        name: "first_name",
+        message: "First name of employee:"
+      },
+      {
+        name: "last_name",
+        message: "Last name of employee:"
+      }
+    ]);
+  
+    const roleChoices = roles.map(({ id, title }) => ({
+      name: title,
+      value: id
+
+    }
+    ));
+  
+    const { roleId } = await prompt({
+      type: "list",
+      name: "roleId",
+      message: "Role of employee:",
+      choices: roleChoices
+    });
+  
+    employee.role_id = roleId;
+  
+    const managerChoices = employees.map(({ id, first_name, last_name }) => ({
+
+
+      name: `${first_name} ${last_name}`,
+      value: id
+    }
+    ));
+
+
+    managerChoices.unshift({ name: "None", value: null });
+  
+    const { managerId } = await prompt({
+      type: "list",
+      name: "managerId",
+      message: "Manager of employee:e",
+      choices: managerChoices
+
+
+    });
+  
+    employee.manager_id = managerId;
+  
+    await db.createEmployee(employee);
+  
+    console.log(
+      `Added ${employee.first_name} to db`
+    );
+  
+
+
+
+
+    
+    loadMainPrompts();
+  }
 
 
 

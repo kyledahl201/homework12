@@ -560,6 +560,45 @@ async function addDepartment() {
     console.log(`Added ${department.name} to db`);
 
 
+
+  
+    loadMainPrompts();
+  }
+
+
+
+  async function removeDepartment() {
+
+
+
+    const departments = await db.findAllDepartments();
+  
+    const departmentChoices = departments.map(({ id, name }) => ({
+
+
+      name: name,
+      value: id
+
+
+    }
+    
+    ));
+  
+    const { departmentId } = await prompt({
+      type: "list",
+      name: "departmentId",
+      message:
+        "Name department to remove",
+      choices: departmentChoices
+    });
+  
+    await db.removeDepartment(departmentId);
+  
+    console.log(`Removed department from db`);
+
+
+
+
     
   
     loadMainPrompts();

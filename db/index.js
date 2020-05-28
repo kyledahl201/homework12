@@ -124,6 +124,19 @@ removeDepartment(departmentId) {
     );
 }
 
+//this will find employees in a departnment and join it with roles
+
+findAllEmployeesByRole(departmentId) {
+
+    return this.connection.query(
+        "SELECT employee.id, employee.first_name, employee.last_name, role.title FROM employee LEFT JOIN role on employee.role_id = role.id LEFT JOIN department department on role.department_id = department.id WHERE department.id = ?;",
+        departmentId
+    );
+
+}
+
+
+
 
 
 

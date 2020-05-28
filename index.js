@@ -439,10 +439,59 @@ async function removeEmployee() {
     console.table(roles);
 
 
-    
+
   
     loadMainPrompts();
   }
+
+
+  async function addRole() {
+
+
+    const departments = await db.findAllDepartments();
+
+
+
+  
+    const departmentChoices = departments.map(({ id, name }) => ({
+      name: name,
+      value: id
+    }
+    ));
+
+
+  
+    const role = await prompt([
+      {
+        name: "title",
+        message: "Please Name the role"
+      },
+      {
+        name: "salary",
+        message: "Please name the salary"
+      },
+      {
+        type: "list",
+        name: "department_id",
+        message: "Please name the department",
+        choices: departmentChoices
+      }
+    ]);
+  
+    await db.createRole(role);
+  
+    console.log(`Added ${role.title} to the database`);
+
+
+
+
+  
+    loadMainPrompts();
+  }
+  
+
+
+
 
 
 

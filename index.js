@@ -383,7 +383,55 @@ async function removeEmployee() {
   }
 
 
+  //this function will update manager for selected employee 
+
+
+
+  async function updateEmployeeManager() {
+    const employees = await db.findAllEmployees();
   
+    const employeeChoices = employees.map(({ id, first_name, last_name }) => ({
+      name: `${first_name} ${last_name}`,
+      value: id
+    }));
+  
+    const { employeeId } = await prompt([
+      {
+        type: "list",
+        name: "employeeId",
+        message: "Choose employee to update",
+        choices: employeeChoices
+      }
+    ]);
+  
+    const managers = await db.findAllPossibleManagers(employeeId);
+  
+    const managerChoices = managers.map(({ id, first_name, last_name }) => ({
+      name: `${first_name} ${last_name}`,
+      value: id
+    }));
+  
+    const { managerId } = await prompt([
+      {
+        type: "list",
+        name: "managerId",
+        message:
+          "Who will be the new manager?",
+        choices: managerChoices
+      }
+    ]);
+  
+    await db.updateEmployeeManager(employeeId, managerId);
+  
+    console.log("manager has been updated for employee");
+  
+    loadMainPrompts();
+  }
+
+  
+
+
+
 
 
 

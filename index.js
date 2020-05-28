@@ -488,7 +488,62 @@ async function removeEmployee() {
   
     loadMainPrompts();
   }
+
+
+
+
+  async function removeRole() {
+
+
+    const roles = await db.findAllRoles();
   
+    const roleChoices = roles.map(({ id, title }) => ({
+      name: title,
+      value: id
+
+    }
+    ));
+  
+    const { roleId } = await prompt([
+
+      {
+        type: "list",
+        name: "roleId",
+        message:
+          "Name a role to remove",
+        choices: roleChoices
+      }
+    ]);
+  
+    await db.removeRole(roleId);
+  
+    console.log("role has been removed");
+
+
+
+
+
+  
+    loadMainPrompts();
+  }
+
+
+
+  
+async function viewDepartments() {
+
+
+  const departments = await db.findAllDepartments();
+
+
+  console.log("\n");
+  console.table(departments);
+
+
+
+  loadMainPrompts();
+}
+
 
 
 

@@ -243,4 +243,93 @@ async function viewEmployeesByDepartment() {
 }
 
 
+//this will view employees by manager 
+
+
+async function viewEmployeesByManager() {
+
+    const managers = await db.findAllEmployees();
+
+
+    const managerChoices = managers.map(({ id, first_name, last_name }) =>
+     ({
+      
+        name: `${first_name} ${last_name}`,
+      value: id
+   
+    }));
+  
+    const { managerId } = await prompt([
+      {
+        type: "list",
+        name: "managerId",
+        message: "What employee needs reports?",
+        choices: managerChoices
+      }
+
+
+    ]);
+  
+    const employees = await db.findAllEmployeesByManager(managerId);
+  
+
+
+    console.log("\n");
+  
+    if (employees.length === 0) {
+      console.log("There is nothing here");
+    } else {
+      console.table(employees);
+    }
+  
+    
+
+    loadMainPrompts();
+}
+
+
+//function to remove emplyee 
+
+
+async function removeEmployee() {
+
+
+
+    const employees = await db.findAllEmployees();
+
+
+  
+    const employeeChoices = employees.map(({ id, first_name, last_name }) => 
+    ({
+      name: `${first_name} ${last_name}`,
+      value: id
+
+    }
+    ));
+  
+    const { employeeId } = await prompt([
+      {
+        type: "list",
+        name: "employeeId",
+        message: "What employees are being removed?",
+        choices: employeeChoices
+      }
+    ]);
+  
+    await db.removeEmployee(employeeId);
+  
+    console.log("You have removed empoloyees from thje db");
+
+
+
+
+
+
+
+  
+    loadMainPrompts();
+  }
+
+
+
 

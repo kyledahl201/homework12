@@ -173,3 +173,30 @@ switch (choice) {
 
 }
 
+async function viewEmployees() {
+
+    const employees = await db.findAllEmployees();
+
+    console.log("\n");
+    console.table(employees);
+
+
+    loadMainPrompts();
+
+
+
+}
+
+async function viewEmployeesByDepartment() {
+
+
+    const departments = await db.findAllDepartments();
+  
+    const departmentChoices = departments.map(({ id, name }) => ({
+      
+        name: name,
+     
+        value: id
+
+    }
+    ));

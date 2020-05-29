@@ -13,7 +13,7 @@ init();
 function init() {
 
 
-    const logoText = logo({ name: "EMployee Manager" }).render();
+    const logoText = logo({ name: "Awesome Employee Tracker" }).render();
 
     console.log(logoText);
 
